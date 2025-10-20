@@ -16,7 +16,7 @@ int main() {
     // 1. Buat data awal (bikin file .txt)
     buatDataAwal();
 
-    // 2. Loop utama program
+    // 2. Loop utama program (akan terus berjalan)
     while (true) {
         bersihkanLayar();
         
@@ -51,5 +51,7 @@ int main() {
         }
     }
 
+    // Kode di bawah ini tidak akan pernah tercapai
+    // karena program ada di 'while(true)'
     return 0;
 }

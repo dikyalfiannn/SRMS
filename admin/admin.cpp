@@ -5,13 +5,14 @@
 #include <fstream>
 #include <iomanip> 
 #include <cstdio> 
+#include <cstdlib> // <-- 1. TAMBAHKAN INI
 
 #include "../utils/utils.h"
 
 using namespace std;
 
 // ==========================================================
-// --- FUNGSI KELOLA DOKTER (Sudah ada, tidak berubah) ---
+// --- FUNGSI KELOLA DOKTER (Tidak berubah) ---
 // ==========================================================
 void lihatSemuaDokter() {
     bersihkanLayar();
@@ -176,7 +177,7 @@ void menuKelolaDokter() {
 
 
 // ==========================================================
-// --- FUNGSI KELOLA PASIEN (Sudah ada, tidak berubah) ---
+// --- FUNGSI KELOLA PASIEN (Tidak berubah) ---
 // ==========================================================
 
 void lihatSemuaPasien() {
@@ -357,7 +358,7 @@ void menuKelolaPasien() {
 
 
 // ==========================================================
-// --- FUNGSI BARU: Kelola Data Obat (CRUD Lengkap) ---
+// --- FUNGSI KELOLA OBAT (Tidak berubah) ---
 // ==========================================================
 
 void lihatSemuaObat() {
@@ -369,19 +370,15 @@ void lihatSemuaObat() {
         tekanEnterUntukLanjut();
         return;
     }
-
-    // Header tabel
     cout << left << setw(10) << "ID"
          << left << setw(25) << "Nama Obat"
          << left << setw(15) << "Stok"
          << left << setw(15) << "Harga" << endl;
     cout << string(65, '-') << endl; 
-
     string baris;
     int jumlahObat = 0;
     while (getline(berkas, baris)) {
         vector<string> data = pecahString(baris, '|');
-        // Ada 4 kolom data
         if (data.size() == 4) { 
             cout << left << setw(10) << data[0]
                  << left << setw(25) << data[1]
@@ -408,10 +405,7 @@ void tambahObatBaru() {
         tekanEnterUntukLanjut();
         return;
     }
-
-    // Minta 4 data
     string id, nama, stok, harga;
-    
     cout << "Masukkan ID Obat (contoh: OB003): ";
     getline(cin, id);
     cout << "Masukkan Nama Obat: ";
@@ -420,10 +414,8 @@ void tambahObatBaru() {
     getline(cin, stok);
     cout << "Masukkan Harga (contoh: 5000): ";
     getline(cin, harga);
-
     berkas << id << "|" << nama << "|" << stok << "|" << harga << endl;
     berkas.close();
-
     cout << "\nData obat baru berhasil ditambahkan!" << endl;
     tekanEnterUntukLanjut();
 }
@@ -456,7 +448,6 @@ void updateObat() {
             getline(cin, stokBaru);
             cout << "Harga (Lama: " << data[3] << "): ";
             getline(cin, hargaBaru);
-            
             berkasSementara << idUpdate << "|" << namaBaru << "|" << stokBaru << "|" << hargaBaru << endl;
         } else {
             berkasSementara << baris << endl;
@@ -539,7 +530,7 @@ void menuKelolaObat() {
 
 
 // ==========================================================
-// --- FUNGSI KELOLA PENGGUNA (Sudah ada, tidak berubah) ---
+// --- FUNGSI KELOLA PENGGUNA (Tidak berubah) ---
 // ==========================================================
 void lihatSemuaPengguna() {
     bersihkanLayar();
@@ -620,7 +611,7 @@ void menuKelolaPengguna() {
 
 
 // ==========================================================
-// --- MENU ADMIN UTAMA (Diperbarui) ---
+// --- MENU ADMIN UTAMA (Hanya 1 perubahan) ---
 // ==========================================================
 void tampilkanMenuAdmin(Pengguna pengguna) {
     int pilihan = 0;
@@ -631,8 +622,8 @@ void tampilkanMenuAdmin(Pengguna pengguna) {
         cout << "========================================" << endl;
         cout << "Selamat datang, " << pengguna.namaPengguna << "!" << endl;
         cout << "1. Kelola Data Dokter" << endl; 
-        cout << "2. Kelola Data Pasien" << endl;
-        cout << "3. Kelola Data Obat" << endl; // <-- SUDAH ADA
+        cout << "2. Kelola Data Pasien" << endl; 
+        cout << "3. Kelola Data Obat" << endl; 
         cout << "4. Kelola Akun Pengguna" << endl; 
         cout << "5. Logout" << endl;
         cout << "----------------------------------------" << endl;
@@ -649,19 +640,20 @@ void tampilkanMenuAdmin(Pengguna pengguna) {
             menuKelolaPasien();
             break;
         case 3:
-            // --- PERUBAHAN DI SINI ---
-            menuKelolaObat(); // Panggil menu obat
+            menuKelolaObat(); 
             break;
-            // -------------------------
         case 4:
             menuKelolaPengguna();
             break;
         case 5:
-            return; 
+            // --- 2. PERUBAHAN DI SINI ---
+            cout << "Logout berhasil. Tekan Enter untuk kembali ke halaman login." << endl;
+            system("pause"); // Menjeda CMD eksternal
+            return; // Kembali ke main.cpp
         default:
             cout << "Pilihan tidak valid. Silakan coba lagi." << endl;
             tekanEnterUntukLanjut();
             break;
         }
     }
-} 
+}
