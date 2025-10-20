@@ -1,0 +1,14 @@
+# File hasil compile
+*.exe
+
+# File database
+users.txt
+data_dokter.txt
+data_pasien.txt
+data_obat.txt
+
+# File sementara
+temp.txt
+
+# Folder setting VS Code
+.vscode/
