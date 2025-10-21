@@ -1,6 +1,6 @@
 #include "perawat.h"
 #include <iostream>
-#include "../utils/utils.h" // Panggil utils
+#include "../utils/utils.h" 
 
 using namespace std;
 
@@ -9,7 +9,7 @@ void tampilkanMenuPerawat(Pengguna pengguna) {
     while(true) {
         bersihkanLayar();
         cout << "========================================" << endl;
-        cout << "         MENU PERAWAT - RS WYU" << endl;
+        cout << "         MENU PERAWAT - RS SLAMET" << endl;
         cout << "========================================" << endl;
         cout << "Selamat datang, " << pengguna.namaPengguna << "!" << endl;
         cout << "1. Lihat Semua Pasien" << endl;
@@ -27,7 +27,7 @@ void tampilkanMenuPerawat(Pengguna pengguna) {
             tekanEnterUntukLanjut();
             break;
         case 3:
-            return; // Kembali ke main.cpp
+            return; 
         default:
             cout << "Pilihan tidak valid." << endl;
             tekanEnterUntukLanjut();

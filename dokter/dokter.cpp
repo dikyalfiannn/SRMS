@@ -4,20 +4,11 @@
 #include <vector>
 #include <fstream>
 #include <iomanip>
-#include <cstdio> // Untuk remove/rename
-
-// Kita perlu "keluar" dari folder dokter (../) untuk menemukan folder utils dan pasien
+#include <cstdio>
 #include "../utils/utils.h"
-// Kita juga panggil pasien.h untuk fungsi lihatSemuaPasien (jika sudah direfactor)
-// Tapi untuk sekarang, kita copy-paste saja logikanya biar gampang
 
 using namespace std;
 
-
-// ==========================================================
-// --- FUNGSI UNTUK MELIHAT PASIEN (Copy dari Admin) ---
-// ==========================================================
-// Dokter juga perlu melihat daftar pasien
 void lihatSemuaPasienVersiDokter() {
     bersihkanLayar();
     cout << "--- Menampilkan Daftar Pasien ---" << endl << endl;
@@ -58,15 +49,10 @@ void lihatSemuaPasienVersiDokter() {
     tekanEnterUntukLanjut();
 }
 
-// ==========================================================
-// --- FUNGSI BARU: Dokter Menulis Diagnosa ---
-// ==========================================================
-// Ini adalah fungsi 'Update' khusus untuk dokter
 void tulisDiagnosa() {
     bersihkanLayar();
     cout << "--- Tulis/Update Diagnosa Pasien ---" << endl << endl;
     
-    // Tampilkan data pasien dulu biar dokter bisa pilih ID
     lihatSemuaPasienVersiDokter(); 
 
     string idUpdate;
@@ -87,7 +73,6 @@ void tulisDiagnosa() {
     while (getline(berkasAsli, baris)) {
         vector<string> data = pecahString(baris, '|');
         
-        // Cari pasien berdasarkan ID
         if (data.size() == 5 && data[0] == idUpdate) {
             ditemukan = true;
             string diagnosaBaru;
@@ -97,11 +82,8 @@ void tulisDiagnosa() {
             cout << "Masukkan Diagnosa Baru: ";
             getline(cin, diagnosaBaru);
 
-            // Tulis ulang barisnya, tapi ganti diagnosanya
-            // data[0] = ID, data[1] = Nama, data[2] = Keluhan, data[3] = Status
             berkasSementara << data[0] << "|" << data[1] << "|" << data[2] << "|" << data[3] << "|" << diagnosaBaru << endl;
         } else {
-            // Jika bukan target, tulis baris lama apa adanya
             berkasSementara << baris << endl;
         }
     }
@@ -120,16 +102,12 @@ void tulisDiagnosa() {
     tekanEnterUntukLanjut();
 }
 
-
-// ==========================================================
-// --- MENU UTAMA DOKTER (Diperbarui) ---
-// ==========================================================
 void tampilkanMenuDokter(Pengguna pengguna) {
     int pilihan = 0;
     while(true) {
         bersihkanLayar();
         cout << "========================================" << endl;
-        cout << "         MENU DOKTER - RS WYU" << endl;
+        cout << "         MENU DOKTER - RS SLAMET        " << endl;
         cout << "========================================" << endl;
         cout << "Selamat datang, " << pengguna.namaPengguna << "!" << endl;
         cout << "1. Lihat Semua Data Pasien" << endl;
@@ -148,7 +126,7 @@ void tampilkanMenuDokter(Pengguna pengguna) {
             tulisDiagnosa();
             break;
         case 3:
-            return; // Kembali ke main.cpp
+            return;
         default:
             cout << "Pilihan tidak valid." << endl;
             tekanEnterUntukLanjut();

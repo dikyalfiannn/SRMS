@@ -9,6 +9,7 @@
 #include "perawat/perawat.h"
 #include "apoteker/apoteker.h"
 #include "pasien/pasien.h"
+#include "resepsionis/resepsionis.h" // <-- BARU
 
 using namespace std;
 
@@ -38,20 +39,14 @@ int main() {
                 tampilkanMenuApoteker(penggunaSaatIni);
             } else if (penggunaSaatIni.peran == "PASIEN") {
                 tampilkanMenuPasien(penggunaSaatIni);
+            } else if (penggunaSaatIni.peran == "RESEPSIONIS") { // <-- BARU
+                tampilkanMenuResepsionis(penggunaSaatIni);
             } else {
                 cout << "Error: Peran tidak dikenal!" << endl;
                 tekanEnterUntukLanjut();
             }
-
-            // 6. Logout
-            // Setelah fungsi menu (misal: tampilkanMenuAdmin) selesai,
-            // itu artinya user memilih 'Logout'.
-            // Program akan kembali ke 'while (true)' dan menampilkan
-            // halaman login lagi.
         }
     }
 
-    // Kode di bawah ini tidak akan pernah tercapai
-    // karena program ada di 'while(true)'
     return 0;
 }

@@ -5,15 +5,13 @@
 #include <fstream>
 #include <iomanip> 
 #include <cstdio> 
-#include <cstdlib> // <-- 1. TAMBAHKAN INI
+#include <cstdlib> 
 
 #include "../utils/utils.h"
 
 using namespace std;
 
-// ==========================================================
-// --- FUNGSI KELOLA DOKTER (Tidak berubah) ---
-// ==========================================================
+
 void lihatSemuaDokter() {
     bersihkanLayar();
     cout << "--- Menampilkan Daftar Dokter ---" << endl << endl;
@@ -176,9 +174,6 @@ void menuKelolaDokter() {
 }
 
 
-// ==========================================================
-// --- FUNGSI KELOLA PASIEN (Tidak berubah) ---
-// ==========================================================
 
 void lihatSemuaPasien() {
     bersihkanLayar();
@@ -357,9 +352,6 @@ void menuKelolaPasien() {
 }
 
 
-// ==========================================================
-// --- FUNGSI KELOLA OBAT (Tidak berubah) ---
-// ==========================================================
 
 void lihatSemuaObat() {
     bersihkanLayar();
@@ -529,9 +521,7 @@ void menuKelolaObat() {
 }
 
 
-// ==========================================================
-// --- FUNGSI KELOLA PENGGUNA (Tidak berubah) ---
-// ==========================================================
+
 void lihatSemuaPengguna() {
     bersihkanLayar();
     cout << "--- Menampilkan Daftar Akun Pengguna (users.txt) ---" << endl << endl;
@@ -610,15 +600,13 @@ void menuKelolaPengguna() {
 }
 
 
-// ==========================================================
-// --- MENU ADMIN UTAMA (Hanya 1 perubahan) ---
-// ==========================================================
+
 void tampilkanMenuAdmin(Pengguna pengguna) {
     int pilihan = 0;
     while (true) {
         bersihkanLayar();
         cout << "========================================" << endl;
-        cout << "         MENU ADMIN - RS WYU" << endl;
+        cout << "       MENU ADMIN - RS SLAMET" << endl;
         cout << "========================================" << endl;
         cout << "Selamat datang, " << pengguna.namaPengguna << "!" << endl;
         cout << "1. Kelola Data Dokter" << endl; 
@@ -646,10 +634,9 @@ void tampilkanMenuAdmin(Pengguna pengguna) {
             menuKelolaPengguna();
             break;
         case 5:
-            // --- 2. PERUBAHAN DI SINI ---
             cout << "Logout berhasil. Tekan Enter untuk kembali ke halaman login." << endl;
-            system("pause"); // Menjeda CMD eksternal
-            return; // Kembali ke main.cpp
+            system("pause"); 
+            return; 
         default:
             cout << "Pilihan tidak valid. Silakan coba lagi." << endl;
             tekanEnterUntukLanjut();
