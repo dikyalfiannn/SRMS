@@ -1,6 +1,7 @@
 #include "perawat.h"
 #include <iostream>
-#include "../utils/utils.h" 
+#include <cstdlib> 
+#include "../utils/utils.h"
 
 using namespace std;
 
@@ -22,11 +23,16 @@ void tampilkanMenuPerawat(Pengguna pengguna) {
 
         switch (pilihan) {
         case 1:
+            cout << "Fitur ini belum dibuat." << endl;
+            tekanEnterUntukLanjut();
+            break;
         case 2:
             cout << "Fitur ini belum dibuat." << endl;
             tekanEnterUntukLanjut();
             break;
         case 3:
+            cout << "Logout berhasil. Tekan Enter untuk kembali ke halaman login." << endl;
+            system("pause"); 
             return; 
         default:
             cout << "Pilihan tidak valid." << endl;

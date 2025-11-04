@@ -1,9 +1,6 @@
 #pragma once
 #include <string>
-#include "../utils/utils.h" // Butuh struct Pengguna
+#include "../utils/utils.h"
 
-// Fungsi untuk 'seeding' data awal jika file .txt tidak ada
 void buatDataAwal();
-
-// Menampilkan halaman login dan memvalidasi
 Pengguna halamanLogin();

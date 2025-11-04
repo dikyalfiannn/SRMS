@@ -1,34 +1,44 @@
 #include "utils.h"
-#include <sstream> 
-#include <limits> 
 
 using namespace std;
 
+int pecahString(const std::string& s, char pemisah, std::string hasil[], int maxUkuran) {
+    string bagian = "";
+    int i = 0;
 
-vector<string> pecahString(const string& s, char pemisah) {
-    vector<string> hasil;
-    string bagian;
-    istringstream aliranString(s);
-    while (getline(aliranString, bagian, pemisah)) {
-        hasil.push_back(bagian);
+    for (size_t c = 0; c < s.length(); ++c) {
+        if (s[c] != pemisah) {
+            bagian += s[c];
+        } else {
+            if (i < maxUkuran) {
+                hasil[i] = bagian;
+                i++;
+            }
+            bagian = "";
+            if (i >= maxUkuran) {
+                break;
+            }
+        }
     }
-    return hasil;
-}
 
+    if (i < maxUkuran) {
+        hasil[i] = bagian;
+        i++;
+    }
+
+    return i;
+}
 
 void bersihkanLayar() {
     cout << "\033[2J\033[1;1H" << flush;
 }
 
-
 void bersihkanInputBuffer() {
     if (cin.fail()) {
         cin.clear(); 
     }
-
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(10000, '\n');
 }
-
 
 void tekanEnterUntukLanjut() {
     cout << "\nTekan Enter untuk melanjutkan...";

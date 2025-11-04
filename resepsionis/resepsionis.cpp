@@ -1,19 +1,16 @@
 #include "resepsionis.h"
 #include <iostream>
 #include <string>
-#include <vector>
 #include <fstream>
 #include <iomanip>
 #include <cstdlib> 
 
 #include "../utils/utils.h"
-#include "../antrean/antrean.h" // Panggil "mesin" Linked List
+#include "../antrean/antrean.h" 
+#include "../jadwalpiket/jadwalpiket.h" 
 
 using namespace std;
 
-// ==========================================================
-// --- FUNGSI 1: Cek Data Pasien Lama ---
-// ==========================================================
 void lihatSemuaPasienVersiResepsionis() {
     bersihkanLayar();
     cout << "--- Menampilkan Daftar Pasien ---" << endl << endl;
@@ -34,9 +31,11 @@ void lihatSemuaPasienVersiResepsionis() {
 
     string baris;
     int jumlahPasien = 0;
+    const int MAX_FIELDS = 5;
+    string data[MAX_FIELDS];
     while (getline(berkas, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 5) { 
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 5) { 
             cout << left << setw(10) << data[0]
                  << left << setw(25) << data[1]
                  << left << setw(20) << data[2]
@@ -54,9 +53,6 @@ void lihatSemuaPasienVersiResepsionis() {
     tekanEnterUntukLanjut();
 }
 
-// ==========================================================
-// --- FUNGSI 2: Pendaftaran Pasien Baru ---
-// ==========================================================
 void registrasiPasienBaru() {
     bersihkanLayar();
     cout << "--- Pendaftaran Pasien Baru ---" << endl << endl;
@@ -86,9 +82,6 @@ void registrasiPasienBaru() {
     tekanEnterUntukLanjut();
 }
 
-// ==========================================================
-// --- FUNGSI 3: Tambah Pasien ke Antrean (Enqueue) ---
-// ==========================================================
 void tambahPasienKeAntrean() {
     bersihkanLayar();
     cout << "--- Check-in Pasien ke Antrean ---" << endl << endl;
@@ -103,9 +96,11 @@ void tambahPasienKeAntrean() {
     cout << left << setw(10) << "ID" << left << setw(25) << "Nama Pasien" << endl;
     cout << string(35, '-') << endl;
     string baris;
+    const int MAX_FIELDS = 5;
+    string data[MAX_FIELDS];
     while (getline(berkas, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 5) { 
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 5) { 
             cout << left << setw(10) << data[0] << left << setw(25) << data[1] << endl;
         }
     }
@@ -116,15 +111,16 @@ void tambahPasienKeAntrean() {
     cout << "Masukkan ID Pasien yang masuk antrean (misal: P001): ";
     getline(cin, idPasien);
     
-    enqueue(idPasien); // Panggil fungsi ENQUEUE dari modul Linked List
+    enqueue(idPasien); 
+    
+    string dokterPiket = tugaskanDokterBerikutnya(); 
+    
+    cout << "Pasien " << idPasien << " ditugaskan ke: " << dokterPiket << endl;
     
     tekanEnterUntukLanjut();
 }
 
 
-// ==========================================================
-// --- MENU UTAMA RESEPSIONIS (DIUPDATE) ---
-// ==========================================================
 void tampilkanMenuResepsionis(Pengguna pengguna) {
     int pilihan = 0;
     while(true) {
@@ -135,10 +131,10 @@ void tampilkanMenuResepsionis(Pengguna pengguna) {
         cout << "Selamat datang, " << pengguna.namaPengguna << "!" << endl;
         cout << "1. Registrasi Pasien Baru" << endl;
         cout << "2. Cek Data Pasien Lama" << endl;
-        cout << "3. (Antrean) Tambah Pasien (Enqueue)" << endl;
-        cout << "4. (Antrean) Panggil Pasien (Dequeue)" << endl;
-        cout << "5. (Antrean) Lihat Daftar Antrean (Display)" << endl;
-        cout << "6. Penjadwalan Konsultasi (Belum ada)" << endl;
+        cout << "3. Tambah Pasien ke Antrean (Auto-assign Dokter)" << endl;
+        cout << "4. Panggil Pasien dari Antrean (Dequeue)" << endl;
+        cout << "5. Lihat Antrean Saat Ini (Display)" << endl;
+        cout << "6. Lihat Jadwal Piket Dokter (Display CLL)" << endl;
         cout << "7. Logout" << endl;
         cout << "----------------------------------------" << endl;
         cout << "Pilihan Anda (1-7): ";
@@ -156,7 +152,7 @@ void tampilkanMenuResepsionis(Pengguna pengguna) {
             tambahPasienKeAntrean();
             break;
         case 4: {
-            string idDipanggil = dequeue(); // Panggil fungsi DEQUEUE
+            string idDipanggil = dequeue(); 
             if (idDipanggil == "kosong") {
                 cout << "Antrean sudah kosong." << endl;
             } else {
@@ -166,11 +162,11 @@ void tampilkanMenuResepsionis(Pengguna pengguna) {
             break;
         }
         case 5:
-            displayAntrean(); // Panggil fungsi DISPLAY
+            displayAntrean(); 
             tekanEnterUntukLanjut();
             break;
         case 6:
-            cout << "Fitur ini sedang dalam pengembangan." << endl;
+            displayJadwalPiket();
             tekanEnterUntukLanjut();
             break;
         case 7:

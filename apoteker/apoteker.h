@@ -2,4 +2,6 @@
 #include "../utils/utils.h"
 
 void tampilkanMenuApoteker(Pengguna pengguna);
-void demoArrayDinamis_KeranjangObat();
+
+// Nama fungsi diubah untuk mencerminkan revisi
+void demoArrayStatis_KeranjangObat();

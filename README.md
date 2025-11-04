@@ -31,31 +31,35 @@ Program akan otomatis compile (`rumahsakit.exe`) dan jalan di terminal.
 
 Catatan materi kuliah yang sudah diimplementasikan di proyek ini.
 
-### Minggu 3: Linked List (Queue/Antrean)
-Menambahkan materi **Linked List** untuk mengelola antrean pasien.
+### Minggu 5: Circular Linked List (Jadwal Piket)
+Menambahkan materi **Circular Linked List** untuk mengelola jadwal piket dokter (Round-Robin).
+
+* **File Baru**: `jadwalpiket/` (modul baru).
+* **File Update**: `resepsionis/resepsionis.cpp`, `.vscode/tasks.json`.
+* **Kegunaan**:
+    * Membuat modul `jadwalpiket/` yang berisi logika **Circular Linked List**.
+    * Fitur ini dipanggil dari menu Resepsionis.
+    * Saat "Tambah Pasien ke Antrean", program otomatis memanggil CLL (`tugaskanDokterBerikutnya()`) untuk membagi pasien ke dokter piket secara bergiliran (Round-Robin).
+    * `displayJadwalPiket()` digunakan untuk melihat putaran piket.
+
+### Minggu 3: Singly Linked List (Queue/Antrean)
+Menambahkan materi **Singly Linked List** untuk mengelola antrean pasien (FIFO).
 
 * **File Baru**: `antrean/` (modul baru), `resepsionis/` (role baru).
-* **File Update**: `main.cpp`, `login/login.cpp`, `perawat/perawat.cpp`, `.vscode/tasks.json`.
+* **File Update**: `main.cpp`, `login/login.cpp`, `perawat/perawat.cpp`.
 * **Kegunaan**:
-    * Membuat modul `antrean/` yang berisi logika **Singly Linked List** sebagai "mesin" Queue (Antrean).
+    * Membuat modul `antrean/` (Singly Linked List) untuk **Antrean Pasien (FIFO)**.
     * Menambahkan role baru **Resepsionis** sebagai "pintu masuk" RS.
     * Resepsionis sekarang bertanggung jawab penuh atas antrean:
-        1.  **`enqueue` (Tambah Antrean):** Menambah pasien ke `tail` (belakang) Linked List.
-        2.  **`dequeue` (Panggil Antrean):** Mengambil pasien dari `head` (depan) Linked List.
-        3.  **`display` (Lihat Antrean):** Menampilkan semua *node* di Linked List.
+        1.  **`enqueue`**: Menambah pasien ke `tail` (belakang) antrean.
+        2.  **`dequeue`**: Mengambil pasien dari `head` (depan) antrean.
+        3.  **`display`**: Menampilkan semua isi antrean.
 
-### Minggu 2: Array Statis & Dinamis
-Menambahkan demo materi array di menu Pasien dan Apoteker.
+### Minggu 2: Demo Array Statis
+Menambahkan demo materi **Array Statis** di menu Pasien dan Apoteker.
 
-* **Array Statis**:
-    * **File**: `pasien/pasien.cpp` (Menu Pasien -> Pilihan 2)
-    * **Fungsi**: `demoArrayStatis_CatatTandaVital()`
-    * **Kegunaan**: Demo array C-style (`string namaTandaVital[4]`) yang ukurannya **tetap**. Dipakai untuk data yang jumlahnya sudah pasti.
-
-* **Array Dinamis (`std::vector`)**:
-    * **File**: `apoteker/apoteker.cpp` (Menu Apoteker -> Pilihan 3)
-    * **Fungsi**: `demoArrayDinamis_KeranjangObat()`
-    * **Kegunaan**: Demo `vector` C++ yang ukurannya **fleksibel**. Dipakai untuk data yang jumlahnya tidak pasti dan bisa ditambah terus (`.push_back()`).
+* **`pasien/pasien.cpp`**: Implementasi **Array Statis** (C-style `string[4]`) untuk 4 Tanda Vital.
+* **`apoteker/apoteker.cpp`**: (Revisi) Demo yang tadinya `std::vector` diubah menjadi **Array Statis** (C-style `string[100]`) untuk Keranjang Resep, agar sesuai arahan (tanpa library modern).
 
 ### Minggu 1: Setup Awal, CRUD, & File I/O
 * Setup struktur proyek multi-folder (satu folder per peran).
@@ -64,3 +68,4 @@ Menambahkan demo materi array di menu Pasien dan Apoteker.
 * Fitur Admin (CRUD Dokter, Pasien, Obat, Akun) selesai.
 * Fitur Dokter (Tulis Diagnosa) selesai.
 * Perbaikan bug input buffer (`cin.ignore`) dan bug layar `cls`.
+* (Revisi) Logika `pecahString` diubah ke manual (tanpa `<sstream>`) dan logika `remove/rename` diubah ke `<cstdio>` (tanpa `<filesystem>`).

@@ -1,17 +1,18 @@
 #include "admin.h"
 #include <iostream>
 #include <string>
-#include <vector>
 #include <fstream>
 #include <iomanip> 
-#include <cstdio> 
 #include <cstdlib> 
+#include <cstdio> // <-- DIUBAH: Kembali ke <cstdio>
 
 #include "../utils/utils.h"
 
 using namespace std;
 
-
+// ==========================================================
+// --- FUNGSI KELOLA DOKTER ---
+// ==========================================================
 void lihatSemuaDokter() {
     bersihkanLayar();
     cout << "--- Menampilkan Daftar Dokter ---" << endl << endl;
@@ -27,9 +28,11 @@ void lihatSemuaDokter() {
     cout << string(60, '-') << endl; 
     string baris;
     int jumlahDokter = 0;
+    const int MAX_FIELDS = 3;
+    string data[MAX_FIELDS];
     while (getline(berkas, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 3) {
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 3) {
             cout << left << setw(10) << data[0]
                  << left << setw(30) << data[1]
                  << left << setw(20) << data[2]
@@ -83,9 +86,11 @@ void updateDokter() {
     }
     string baris;
     bool ditemukan = false;
+    const int MAX_FIELDS = 3;
+    string data[MAX_FIELDS];
     while (getline(berkasAsli, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 3 && data[0] == idUpdate) {
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 3 && data[0] == idUpdate) {
             ditemukan = true;
             string namaBaru, spesialisasiBaru;
             cout << "Data Ditemukan. Masukkan data baru:" << endl;
@@ -101,11 +106,11 @@ void updateDokter() {
     berkasAsli.close();
     berkasSementara.close(); 
     if (ditemukan) {
-        remove("data_dokter.txt");
-        rename("temp.txt", "data_dokter.txt");
+        remove("data_dokter.txt"); // <-- DIUBAH
+        rename("temp.txt", "data_dokter.txt"); // <-- DIUBAH
         cout << "\nData dokter berhasil di-update!" << endl;
     } else {
-        remove("temp.txt"); 
+        remove("temp.txt"); // <-- DIUBAH
         cout << "\nID Dokter " << idUpdate << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
@@ -127,9 +132,11 @@ void hapusDokter() {
     }
     string baris;
     bool ditemukan = false;
+    const int MAX_FIELDS = 3;
+    string data[MAX_FIELDS];
     while (getline(berkasAsli, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 3 && data[0] == idHapus) {
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 3 && data[0] == idHapus) {
             ditemukan = true;
         } else {
             berkasSementara << baris << endl;
@@ -138,11 +145,11 @@ void hapusDokter() {
     berkasAsli.close();
     berkasSementara.close();
     if (ditemukan) {
-        remove("data_dokter.txt");
-        rename("temp.txt", "data_dokter.txt");
+        remove("data_dokter.txt"); // <-- DIUBAH
+        rename("temp.txt", "data_dokter.txt"); // <-- DIUBAH
         cout << "\nData dokter berhasil dihapus!" << endl;
     } else {
-        remove("temp.txt");
+        remove("temp.txt"); // <-- DIUBAH
         cout << "\nID Dokter " << idHapus << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
@@ -174,7 +181,7 @@ void menuKelolaDokter() {
 }
 
 
-
+// --- FUNGSI KELOLA PASIEN ---
 void lihatSemuaPasien() {
     bersihkanLayar();
     cout << "--- Menampilkan Daftar Pasien ---" << endl << endl;
@@ -192,9 +199,11 @@ void lihatSemuaPasien() {
     cout << string(90, '-') << endl; 
     string baris;
     int jumlahPasien = 0;
+    const int MAX_FIELDS = 5;
+    string data[MAX_FIELDS];
     while (getline(berkas, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 5) { 
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 5) { 
             cout << left << setw(10) << data[0]
                  << left << setw(25) << data[1]
                  << left << setw(20) << data[2]
@@ -257,9 +266,11 @@ void updatePasien() {
     }
     string baris;
     bool ditemukan = false;
+    const int MAX_FIELDS = 5;
+    string data[MAX_FIELDS];
     while (getline(berkasAsli, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 5 && data[0] == idUpdate) {
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 5 && data[0] == idUpdate) {
             ditemukan = true;
             string namaBaru, keluhanBaru, statusBaru, diagnosaBaru;
             cout << "Data Ditemukan. Masukkan data baru:" << endl;
@@ -279,11 +290,11 @@ void updatePasien() {
     berkasAsli.close();
     berkasSementara.close(); 
     if (ditemukan) {
-        remove("data_pasien.txt");
-        rename("temp.txt", "data_pasien.txt");
+        remove("data_pasien.txt"); // <-- DIUBAH
+        rename("temp.txt", "data_pasien.txt"); // <-- DIUBAH
         cout << "\nData pasien berhasil di-update!" << endl;
     } else {
-        remove("temp.txt"); 
+        remove("temp.txt"); // <-- DIUBAH
         cout << "\nID Pasien " << idUpdate << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
@@ -305,9 +316,11 @@ void hapusPasien() {
     }
     string baris;
     bool ditemukan = false;
+    const int MAX_FIELDS = 5;
+    string data[MAX_FIELDS];
     while (getline(berkasAsli, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 5 && data[0] == idHapus) {
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 5 && data[0] == idHapus) {
             ditemukan = true;
         } else {
             berkasSementara << baris << endl;
@@ -316,11 +329,11 @@ void hapusPasien() {
     berkasAsli.close();
     berkasSementara.close();
     if (ditemukan) {
-        remove("data_pasien.txt");
-        rename("temp.txt", "data_pasien.txt");
+        remove("data_pasien.txt"); // <-- DIUBAH
+        rename("temp.txt", "data_pasien.txt"); // <-- DIUBAH
         cout << "\nData pasien berhasil dihapus!" << endl;
     } else {
-        remove("temp.txt");
+        remove("temp.txt"); // <-- DIUBAH
         cout << "\nID Pasien " << idHapus << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
@@ -352,7 +365,7 @@ void menuKelolaPasien() {
 }
 
 
-
+// --- FUNGSI KELOLA OBAT ---
 void lihatSemuaObat() {
     bersihkanLayar();
     cout << "--- Menampilkan Daftar Obat ---" << endl << endl;
@@ -369,9 +382,11 @@ void lihatSemuaObat() {
     cout << string(65, '-') << endl; 
     string baris;
     int jumlahObat = 0;
+    const int MAX_FIELDS = 4;
+    string data[MAX_FIELDS];
     while (getline(berkas, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 4) { 
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 4) { 
             cout << left << setw(10) << data[0]
                  << left << setw(25) << data[1]
                  << left << setw(15) << data[2]
@@ -428,9 +443,11 @@ void updateObat() {
     }
     string baris;
     bool ditemukan = false;
+    const int MAX_FIELDS = 4;
+    string data[MAX_FIELDS];
     while (getline(berkasAsli, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 4 && data[0] == idUpdate) {
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 4 && data[0] == idUpdate) {
             ditemukan = true;
             string namaBaru, stokBaru, hargaBaru;
             cout << "Data Ditemukan. Masukkan data baru:" << endl;
@@ -448,11 +465,11 @@ void updateObat() {
     berkasAsli.close();
     berkasSementara.close(); 
     if (ditemukan) {
-        remove("data_obat.txt");
-        rename("temp.txt", "data_obat.txt");
+        remove("data_obat.txt"); // <-- DIUBAH
+        rename("temp.txt", "data_obat.txt"); // <-- DIUBAH
         cout << "\nData obat berhasil di-update!" << endl;
     } else {
-        remove("temp.txt"); 
+        remove("temp.txt"); // <-- DIUBAH
         cout << "\nID Obat " << idUpdate << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
@@ -474,9 +491,11 @@ void hapusObat() {
     }
     string baris;
     bool ditemukan = false;
+    const int MAX_FIELDS = 4;
+    string data[MAX_FIELDS];
     while (getline(berkasAsli, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 4 && data[0] == idHapus) {
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 4 && data[0] == idHapus) {
             ditemukan = true;
         } else {
             berkasSementara << baris << endl;
@@ -485,11 +504,11 @@ void hapusObat() {
     berkasAsli.close();
     berkasSementara.close();
     if (ditemukan) {
-        remove("data_obat.txt");
-        rename("temp.txt", "data_obat.txt");
+        remove("data_obat.txt"); // <-- DIUBAH
+        rename("temp.txt", "data_obat.txt"); // <-- DIUBAH
         cout << "\nData obat berhasil dihapus!" << endl;
     } else {
-        remove("temp.txt");
+        remove("temp.txt"); // <-- DIUBAH
         cout << "\nID Obat " << idHapus << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
@@ -521,7 +540,7 @@ void menuKelolaObat() {
 }
 
 
-
+// --- FUNGSI KELOLA PENGGUNA ---
 void lihatSemuaPengguna() {
     bersihkanLayar();
     cout << "--- Menampilkan Daftar Akun Pengguna (users.txt) ---" << endl << endl;
@@ -537,9 +556,11 @@ void lihatSemuaPengguna() {
     cout << string(55, '-') << endl; 
     string baris;
     int jumlahPengguna = 0;
+    const int MAX_FIELDS = 3;
+    string data[MAX_FIELDS];
     while (getline(berkas, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 3) {
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 3) {
             cout << left << setw(20) << data[0]
                  << left << setw(20) << data[1]
                  << left << setw(15) << data[2]
@@ -600,13 +621,13 @@ void menuKelolaPengguna() {
 }
 
 
-
+// --- MENU ADMIN UTAMA ---
 void tampilkanMenuAdmin(Pengguna pengguna) {
     int pilihan = 0;
     while (true) {
         bersihkanLayar();
         cout << "========================================" << endl;
-        cout << "       MENU ADMIN - RS SLAMET" << endl;
+        cout << "         MENU ADMIN - RS SLAMET" << endl; 
         cout << "========================================" << endl;
         cout << "Selamat datang, " << pengguna.namaPengguna << "!" << endl;
         cout << "1. Kelola Data Dokter" << endl; 

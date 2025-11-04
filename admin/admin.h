@@ -1,5 +1,4 @@
 #pragma once
-#include "../utils/utils.h" // Butuh struct Pengguna
+#include "../utils/utils.h"
 
-// Deklarasi fungsi menu admin
 void tampilkanMenuAdmin(Pengguna pengguna);

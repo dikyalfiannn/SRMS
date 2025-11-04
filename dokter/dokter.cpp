@@ -1,10 +1,11 @@
 #include "dokter.h"
 #include <iostream>
 #include <string>
-#include <vector>
 #include <fstream>
 #include <iomanip>
-#include <cstdio>
+#include <cstdlib> 
+#include <cstdio> // <-- DIUBAH: Kembali ke <cstdio>
+
 #include "../utils/utils.h"
 
 using namespace std;
@@ -29,9 +30,11 @@ void lihatSemuaPasienVersiDokter() {
 
     string baris;
     int jumlahPasien = 0;
+    const int MAX_FIELDS = 5;
+    string data[MAX_FIELDS];
     while (getline(berkas, baris)) {
-        vector<string> data = pecahString(baris, '|');
-        if (data.size() == 5) { 
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
+        if (jumlahField == 5) { 
             cout << left << setw(10) << data[0]
                  << left << setw(25) << data[1]
                  << left << setw(20) << data[2]
@@ -70,10 +73,12 @@ void tulisDiagnosa() {
 
     string baris;
     bool ditemukan = false;
+    const int MAX_FIELDS = 5;
+    string data[MAX_FIELDS];
     while (getline(berkasAsli, baris)) {
-        vector<string> data = pecahString(baris, '|');
+        int jumlahField = pecahString(baris, '|', data, MAX_FIELDS);
         
-        if (data.size() == 5 && data[0] == idUpdate) {
+        if (jumlahField == 5 && data[0] == idUpdate) {
             ditemukan = true;
             string diagnosaBaru;
 
@@ -92,22 +97,23 @@ void tulisDiagnosa() {
     berkasSementara.close(); 
 
     if (ditemukan) {
-        remove("data_pasien.txt");
-        rename("temp.txt", "data_pasien.txt");
+        remove("data_pasien.txt"); // <-- DIUBAH
+        rename("temp.txt", "data_pasien.txt"); // <-- DIUBAH
         cout << "\nDiagnosa untuk pasien " << idUpdate << " berhasil di-update!" << endl;
     } else {
-        remove("temp.txt"); 
+        remove("temp.txt"); // <-- DIUBAH
         cout << "\nID Pasien " << idUpdate << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
 }
+
 
 void tampilkanMenuDokter(Pengguna pengguna) {
     int pilihan = 0;
     while(true) {
         bersihkanLayar();
         cout << "========================================" << endl;
-        cout << "         MENU DOKTER - RS SLAMET        " << endl;
+        cout << "         MENU DOKTER - RS SLAMET" << endl; 
         cout << "========================================" << endl;
         cout << "Selamat datang, " << pengguna.namaPengguna << "!" << endl;
         cout << "1. Lihat Semua Data Pasien" << endl;
@@ -126,7 +132,9 @@ void tampilkanMenuDokter(Pengguna pengguna) {
             tulisDiagnosa();
             break;
         case 3:
-            return;
+            cout << "Logout berhasil. Tekan Enter untuk kembali ke halaman login." << endl;
+            system("pause"); 
+            return; 
         default:
             cout << "Pilihan tidak valid." << endl;
             tekanEnterUntukLanjut();

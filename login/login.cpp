@@ -1,7 +1,6 @@
 #include "login.h"
 #include <iostream>
 #include <fstream> 
-#include <vector>
 
 #include "../utils/utils.h"
 
@@ -18,46 +17,36 @@ void periksaDanBuatFile(const string& namaFile, const string& isiDefault) {
     berkas.close();
 }
 
-
-// Implementasi fungsi seeding data
 void buatDataAwal() {
-    // Skema: namaPengguna|kataSandi|peran
     periksaDanBuatFile("users.txt",
         "admin|admin123|ADMIN\n"
         "drbudi|dokter1|DOKTER\n"
         "susterani|perawat1|PERAWAT\n"
         "aptbudi|apoteker1|APOTEKER\n"
         "pasienono|pasien1|PASIEN\n"
-        "resepsionis|resepsionis123|RESEPSIONIS\n" // <-- BARU
+        "resepsionis|resepsionis123|RESEPSIONIS\n" 
     );
-
-    // Skema: id|nama|spesialisasi
     periksaDanBuatFile("data_dokter.txt", 
         "D001|Dr. Budi Santoso|Jantung\n"
         "D002|Dr. Ani Wijaya|Anak\n"
         "D003|Dr. Guntur Setiawan|Mata\n"
     );
-
-    // Skema: id|nama|keluhan|status|diagnosa
     periksaDanBuatFile("data_pasien.txt", 
         "P001|Siti Aminah|Demam Tinggi|DIRAWAT|Belum ada\n"
         "P002|Ahmad Dhani|Pusing|PULANG|Vertigo\n"
     );
-
-    // Skema: id|nama_obat|stok|harga
     periksaDanBuatFile("data_obat.txt", 
         "OB001|Paracetamol|100|5000\n"
         "OB002|Amoxicillin|50|15000\n"
     );
 }
 
-
 Pengguna halamanLogin() {
     Pengguna pengguna = {"", "", false}; 
     string inputNama, inputSandi;
 
     cout << "========================================" << endl;
-    cout << "   SELAT DATANG DI SISTEM RS SLAMET" << endl;
+    cout << "   SELAMAT DATANG DI SISTEM RS SLAMET" << endl; 
     cout << "========================================" << endl;
     cout << "Silakan login:" << endl;
     
@@ -76,9 +65,11 @@ Pengguna halamanLogin() {
     }
 
     while (getline(berkas, baris)) {
-        vector<string> dataPengguna = pecahString(baris, '|'); 
+        const int MAX_FIELDS = 3;
+        string dataPengguna[MAX_FIELDS];
+        int jumlahField = pecahString(baris, '|', dataPengguna, MAX_FIELDS); 
 
-        if (dataPengguna.size() == 3) {
+        if (jumlahField == 3) { 
             string namaTersimpan = dataPengguna[0];
             string sandiTersimpan = dataPengguna[1];
             string peranTersimpan = dataPengguna[2];
@@ -92,7 +83,6 @@ Pengguna halamanLogin() {
             }
         }
     }
-
     berkas.close();
     
     bersihkanLayar();

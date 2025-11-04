@@ -1,28 +1,32 @@
 #include "antrean.h"
 #include <iostream>
-#include "../utils/utils.h" // Butuh bersihkanLayar, dll.
+#include "../utils/utils.h"
 
 using namespace std;
 
-// Ini adalah struktur Node untuk Linked List
+// === TANDA LINKED LIST ===
+// Ini adalah struktur Node untuk Singly Linked List
 struct Node {
-    string idPasien;
-    Node* next;
+    string idPasien; // Data
+    Node* next;     // Pointer ke node berikutnya
 };
 
-// Pointer untuk menandai 'kepala' dan 'ekor' antrean
+// === TANDA LINKED LIST ===
+// Pointer untuk menandai 'kepala' (depan) dan 'ekor' (belakang)
 Node* kepala = nullptr;
 Node* ekor = nullptr;
 
-// Implementasi ENQUEUE (Tambah di Ekor/Belakang)
+// === TANDA LINKED LIST ===
+// OPERASI LINKED LIST: Enqueue (Insert at Tail / Tambah di Belakang)
 void enqueue(string idPasien) {
-    // 1. Buat node baru
+    // 1. Buat node baru di memori
     Node* nodeBaru = new Node;
     nodeBaru->idPasien = idPasien;
     nodeBaru->next = nullptr;
 
     // 2. Cek apakah antrean kosong
     if (ekor == nullptr) {
+        // Jika kosong, node baru jadi kepala dan ekor
         kepala = nodeBaru;
         ekor = nodeBaru;
     } else {
@@ -35,7 +39,8 @@ void enqueue(string idPasien) {
     cout << "\nPasien dengan ID " << idPasien << " berhasil masuk antrean." << endl;
 }
 
-// Implementasi DEQUEUE (Hapus dari Kepala/Depan)
+// === TANDA LINKED LIST ===
+// OPERASI LINKED LIST: Dequeue (Delete at Head / Hapus dari Depan)
 string dequeue() {
     // 1. Cek jika antrean kosong
     if (kepala == nullptr) {
@@ -64,7 +69,8 @@ string dequeue() {
     return idPasienDipanggil;
 }
 
-// Implementasi DISPLAY (Melihat Daftar Antrean)
+// === TANDA LINKED LIST ===
+// OPERASI LINKED LIST: Display (Traverse / Telusuri)
 void displayAntrean() {
     bersihkanLayar();
     cout << "--- Daftar Antrean Pasien Saat Ini ---" << endl;
@@ -74,12 +80,15 @@ void displayAntrean() {
         return;
     }
 
+    // 1. Buat pointer sementara (penunjuk) mulai dari kepala
     Node* penunjuk = kepala;
     int nomor = 1;
 
     cout << "DEPAN -> ";
+    // 2. Loop selama penunjuk belum sampai akhir (nullptr)
     while (penunjuk != nullptr) {
         cout << "[" << nomor << ". " << penunjuk->idPasien << "] -> ";
+        // 3. Majukan penunjuk ke node berikutnya
         penunjuk = penunjuk->next;
         nomor++;
     }
