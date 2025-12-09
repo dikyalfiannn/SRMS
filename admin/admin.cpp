@@ -4,16 +4,17 @@
 #include <fstream>
 #include <iomanip> 
 #include <cstdlib> 
-#include <cstdio> // <-- DIUBAH: Kembali ke <cstdio>
+#include <cstdio> 
 
 #include "../utils/utils.h"
+#include "../stokbaju/stokbaju.h" // <-- PENTING: Include file baru
 
 using namespace std;
 
 // ==========================================================
-// --- FUNGSI KELOLA DOKTER ---
+// --- FUNGSI KELOLA DOKTER (Kode Awal Kamu) ---
 // ==========================================================
-void lihatSemuaDokter() {
+void lihatSemuaDokter() { 
     bersihkanLayar();
     cout << "--- Menampilkan Daftar Dokter ---" << endl << endl;
     ifstream berkas("data_dokter.txt"); 
@@ -106,11 +107,11 @@ void updateDokter() {
     berkasAsli.close();
     berkasSementara.close(); 
     if (ditemukan) {
-        remove("data_dokter.txt"); // <-- DIUBAH
-        rename("temp.txt", "data_dokter.txt"); // <-- DIUBAH
+        remove("data_dokter.txt"); 
+        rename("temp.txt", "data_dokter.txt"); 
         cout << "\nData dokter berhasil di-update!" << endl;
     } else {
-        remove("temp.txt"); // <-- DIUBAH
+        remove("temp.txt"); 
         cout << "\nID Dokter " << idUpdate << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
@@ -145,11 +146,11 @@ void hapusDokter() {
     berkasAsli.close();
     berkasSementara.close();
     if (ditemukan) {
-        remove("data_dokter.txt"); // <-- DIUBAH
-        rename("temp.txt", "data_dokter.txt"); // <-- DIUBAH
+        remove("data_dokter.txt"); 
+        rename("temp.txt", "data_dokter.txt"); 
         cout << "\nData dokter berhasil dihapus!" << endl;
     } else {
-        remove("temp.txt"); // <-- DIUBAH
+        remove("temp.txt"); 
         cout << "\nID Dokter " << idHapus << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
@@ -181,7 +182,7 @@ void menuKelolaDokter() {
 }
 
 
-// --- FUNGSI KELOLA PASIEN ---
+// --- FUNGSI KELOLA PASIEN (Kode Awal Kamu) ---
 void lihatSemuaPasien() {
     bersihkanLayar();
     cout << "--- Menampilkan Daftar Pasien ---" << endl << endl;
@@ -290,11 +291,11 @@ void updatePasien() {
     berkasAsli.close();
     berkasSementara.close(); 
     if (ditemukan) {
-        remove("data_pasien.txt"); // <-- DIUBAH
-        rename("temp.txt", "data_pasien.txt"); // <-- DIUBAH
+        remove("data_pasien.txt"); 
+        rename("temp.txt", "data_pasien.txt"); 
         cout << "\nData pasien berhasil di-update!" << endl;
     } else {
-        remove("temp.txt"); // <-- DIUBAH
+        remove("temp.txt"); 
         cout << "\nID Pasien " << idUpdate << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
@@ -329,11 +330,11 @@ void hapusPasien() {
     berkasAsli.close();
     berkasSementara.close();
     if (ditemukan) {
-        remove("data_pasien.txt"); // <-- DIUBAH
-        rename("temp.txt", "data_pasien.txt"); // <-- DIUBAH
+        remove("data_pasien.txt"); 
+        rename("temp.txt", "data_pasien.txt"); 
         cout << "\nData pasien berhasil dihapus!" << endl;
     } else {
-        remove("temp.txt"); // <-- DIUBAH
+        remove("temp.txt"); 
         cout << "\nID Pasien " << idHapus << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
@@ -365,7 +366,7 @@ void menuKelolaPasien() {
 }
 
 
-// --- FUNGSI KELOLA OBAT ---
+// --- FUNGSI KELOLA OBAT (Kode Awal Kamu) ---
 void lihatSemuaObat() {
     bersihkanLayar();
     cout << "--- Menampilkan Daftar Obat ---" << endl << endl;
@@ -465,11 +466,11 @@ void updateObat() {
     berkasAsli.close();
     berkasSementara.close(); 
     if (ditemukan) {
-        remove("data_obat.txt"); // <-- DIUBAH
-        rename("temp.txt", "data_obat.txt"); // <-- DIUBAH
+        remove("data_obat.txt"); 
+        rename("temp.txt", "data_obat.txt"); 
         cout << "\nData obat berhasil di-update!" << endl;
     } else {
-        remove("temp.txt"); // <-- DIUBAH
+        remove("temp.txt"); 
         cout << "\nID Obat " << idUpdate << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
@@ -504,11 +505,11 @@ void hapusObat() {
     berkasAsli.close();
     berkasSementara.close();
     if (ditemukan) {
-        remove("data_obat.txt"); // <-- DIUBAH
-        rename("temp.txt", "data_obat.txt"); // <-- DIUBAH
+        remove("data_obat.txt"); 
+        rename("temp.txt", "data_obat.txt"); 
         cout << "\nData obat berhasil dihapus!" << endl;
     } else {
-        remove("temp.txt"); // <-- DIUBAH
+        remove("temp.txt"); 
         cout << "\nID Obat " << idHapus << " tidak ditemukan." << endl;
     }
     tekanEnterUntukLanjut();
@@ -540,7 +541,7 @@ void menuKelolaObat() {
 }
 
 
-// --- FUNGSI KELOLA PENGGUNA ---
+// --- FUNGSI KELOLA PENGGUNA (Kode Awal Kamu) ---
 void lihatSemuaPengguna() {
     bersihkanLayar();
     cout << "--- Menampilkan Daftar Akun Pengguna (users.txt) ---" << endl << endl;
@@ -621,7 +622,60 @@ void menuKelolaPengguna() {
 }
 
 
-// --- MENU ADMIN UTAMA ---
+// ==========================================================
+// --- FUNGSI BARU: STACK BAJU MEDIS ---
+// ==========================================================
+void menuStokBajuMedis() {
+    int pilihan = 0;
+    // Panggil initStokBaju() yang sekarang mereset index array ke -1
+    initStokBaju(); 
+    while (true) {
+        bersihkanLayar();
+        cout << "--- Logistik: Stok Baju Medis (STACK ARRAY) ---" << endl;
+        cout << "1. Masukkan Baju Kotor ke Tumpukan (PUSH)" << endl;
+        cout << "2. Ambil Baju Paling Atas untuk Dicuci (POP)" << endl;
+        cout << "3. Lihat Tumpukan Baju Saat Ini (DISPLAY)" << endl;
+        cout << "4. Kembali ke Menu Admin" << endl;
+        cout << "-----------------------------------------------" << endl;
+        cout << "Pilihan Anda (1-4): ";
+        cin >> pilihan;
+        bersihkanInputBuffer(); 
+        
+        switch (pilihan) {
+        case 1: {
+            string jenis;
+            cout << "Masukkan Jenis Baju (contoh: Jubah Dokter/Sprei Pasien): ";
+            getline(cin, jenis);
+            pushBaju(jenis);
+            tekanEnterUntukLanjut();
+            break;
+        }
+        case 2: {
+            string baju = popBaju();
+            if (baju != "kosong") {
+                cout << "\nBaju yang diambil untuk dicuci: '" << baju << "'" << endl;
+            } else {
+                cout << "\nTumpukan baju kosong. Tidak ada yang bisa diambil." << endl;
+            }
+            tekanEnterUntukLanjut();
+            break;
+        }
+        case 3: 
+            displayStackBaju();
+            tekanEnterUntukLanjut();
+            break;
+        case 4:
+            return;
+        default: 
+            cout << "Pilihan tidak valid." << endl; 
+            tekanEnterUntukLanjut(); 
+            break;
+        }
+    }
+}
+
+
+// --- MENU ADMIN UTAMA (DIUBAH UNTUK STACK) ---
 void tampilkanMenuAdmin(Pengguna pengguna) {
     int pilihan = 0;
     while (true) {
@@ -634,9 +688,10 @@ void tampilkanMenuAdmin(Pengguna pengguna) {
         cout << "2. Kelola Data Pasien" << endl; 
         cout << "3. Kelola Data Obat" << endl; 
         cout << "4. Kelola Akun Pengguna" << endl; 
-        cout << "5. Logout" << endl;
+        cout << "5. Logistik: Stok Baju Medis (Stack)" << endl; // <-- FITUR BARU
+        cout << "6. Logout" << endl; // <-- DIUBAH
         cout << "----------------------------------------" << endl;
-        cout << "Pilihan Anda (1-5): ";
+        cout << "Pilihan Anda (1-6): "; // <-- DIUBAH
         
         cin >> pilihan;
         bersihkanInputBuffer(); 
@@ -655,6 +710,9 @@ void tampilkanMenuAdmin(Pengguna pengguna) {
             menuKelolaPengguna();
             break;
         case 5:
+            menuStokBajuMedis(); // <-- Panggil fungsi baru (Stack)
+            break;
+        case 6:
             cout << "Logout berhasil. Tekan Enter untuk kembali ke halaman login." << endl;
             system("pause"); 
             return; 

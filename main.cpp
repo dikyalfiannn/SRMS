@@ -9,6 +9,7 @@
 #include "apoteker/apoteker.h"
 #include "pasien/pasien.h"
 #include "resepsionis/resepsionis.h" 
+#include "stokbaju/stokbaju.h"
 
 using namespace std;
 
